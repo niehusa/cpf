@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Set;
-import java.util.Properties;
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -24,7 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.CollectionFactory;
 import org.springframework.util.ObjectUtils;
 
 
@@ -107,7 +103,7 @@ class CpfServletContext implements ServletContext {
              if (ObjectUtils.isEmpty(fileList)) {
                  return null;
              }
-             Set resourcePaths = CollectionFactory.createLinkedSetIfPossible(fileList.length);
+             Set resourcePaths =  new LinkedHashSet(fileList.length);
              for (int i = 0; i < fileList.length; i++) {
                  String resultPath = actualPath + fileList[i];
                  if (resource.createRelative(fileList[i]).getFile().isDirectory()) {
